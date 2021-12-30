@@ -1,0 +1,97 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
+class MyThread1 implements Runnable {
+    String s1;
+    static int length;
+
+    public MyThread1() {
+    }
+
+    public MyThread1(String s) {
+        s1 = s;
+    }
+
+    @Override
+    public void run() {
+        int i = 0;
+        StringBuilder dataFromFile = new StringBuilder();
+        try {
+            File f1 = new File(s1);
+            Scanner fileReading = new Scanner(f1);
+            while (fileReading.hasNextLine()) {
+                i++;
+                String tempData = fileReading.nextLine() + " ";
+                dataFromFile.append(tempData);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        length = dataFromFile.length();
+        try {
+            thread.sleep(10);
+        } catch (InterruptedException e) {
+
+            e.printStackTrace();
+        }
+        System.out.println(dataFromFile);
+    }
+}
+
+class MyThread2 implements Runnable {
+    String s1;
+
+    public MyThread2(String s) {
+        s1 = s;
+    }
+
+    public MyThread2() {
+    }
+
+    @Override
+    public void run() {
+        int i = 0;
+        StringBuilder dataFromFile = new StringBuilder();
+        try {
+            File f1 = new File(s1);
+            Scanner fileReading = new Scanner(f1);
+            while (fileReading.hasNextLine()) {
+                i++;
+                String tempData = fileReading.nextLine() + " ";
+                dataFromFile.append(tempData);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        MyThread1 m1 = new MyThread1();
+        if (m1.length > dataFromFile.length()) {
+
+            Thread t1 = new Thread(m1);
+            t1.setPriority(10);
+            try {
+                thread.sleep(1000);
+            } catch (InterruptedException e) {
+
+                e.printStackTrace();
+            }
+        } else {
+            MyThread2 m2 = new MyThread2();
+            Thread t2 = new Thread(m2);
+            t2.setPriority(10);
+        }
+        System.out.println(dataFromFile);
+    }
+}
+
+public class PracticalTest {
+    public static void main(String[] args) {
+        MyThread1 m1 = new MyThread1("D:\\Java-Ppdu\\P3\\one.txt");
+        Thread t1 = new Thread(m1);
+        MyThread2 fs2 = new MyThread2("D:\\Java-Ppdu\\P3\\two.txt");
+        Thread t2 = new Thread(fs2);
+
+        t1.start();
+        t2.start();
+    }
+}
