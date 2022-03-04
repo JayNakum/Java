@@ -65,7 +65,7 @@ public class LoadModelsTest implements ApplicationListener {
 
 		Model shark = assets.get("shark/Shark_Expand.obj", Model.class);
 		ModelInstance sharkInstance = new ModelInstance(shark);
-		// // sharkInstance.transform.setToTranslation(-5f, 0, -5f);
+		// sharkInstance.transform.setToTranslation(-5f, 0, -5f);
 		instances.add(sharkInstance);
 
 		isLoading = false;
