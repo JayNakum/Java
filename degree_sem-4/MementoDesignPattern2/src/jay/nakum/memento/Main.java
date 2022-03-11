@@ -1,5 +1,9 @@
+package jay.nakum.memento;
+
+import jay.nakum.memento.gui.MyFrame;
+
 public class Main {
     public static void main(String[] args) throws Exception {
-        System.out.println("Hello, World!");
+        new MyFrame("Article VCS");
     }
 }
