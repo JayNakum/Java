@@ -7,6 +7,10 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import javax.swing.border.EmptyBorder;
+
+import jay.nakum.memento.designPattern.CareTaker;
+import jay.nakum.memento.designPattern.Originator;
+
 import java.awt.BorderLayout;
 
 import java.awt.event.ActionEvent;
@@ -21,6 +25,10 @@ public class MyFrame extends JFrame implements ActionListener {
   private JTextArea textArea;
   private JPanel panelBottom;
   private JButton save, undo, redo;
+  private Originator originator;
+  private CareTaker careTaker;
+
+  private int savedFiles = -1, currentArticle;
 
   class HintTextField extends JTextField {
 
@@ -54,7 +62,7 @@ public class MyFrame extends JFrame implements ActionListener {
     }
   }
 
-  private void initPanel() {    
+  private void initPanel() {
     panelBottom = new JPanel();
 
     save = new JButton("Save");
@@ -70,7 +78,7 @@ public class MyFrame extends JFrame implements ActionListener {
   }
 
   public MyFrame(String title) {
-    
+
     this.setTitle(title);
     this.setSize(600, 400);
     this.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -82,23 +90,46 @@ public class MyFrame extends JFrame implements ActionListener {
 
     textArea.setBorder(new EmptyBorder(10, 10, 10, 10));
     this.add(textArea, BorderLayout.CENTER);
-    this.add(panelBottom, BorderLayout.SOUTH);    
+    this.add(panelBottom, BorderLayout.SOUTH);
 
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     this.setVisible(true);
+
+    originator = new Originator();
+    careTaker = new CareTaker();
   }
 
   @Override
   public void actionPerformed(ActionEvent e) {
-    if(e.getSource() == "Save") {
+    if (e.getSource() == save) {
+      savedFiles++;
+      String article = textArea.getText();
+      originator.set(article);
+      careTaker.add(originator.saveToMemento());
+      currentArticle++;
 
-    }
-    if(e.getSource() == "Undo") {
-
-    }
-    if(e.getSource() == "Redo") {
-      
+      System.out.println("Saved Files: " + savedFiles);
+      undo.setEnabled(true);
+    } else if (e.getSource() == undo) {
+      if (currentArticle > 0) {
+        currentArticle--;
+        String article = originator.getFromMemento(careTaker.get(currentArticle));
+        textArea.setText(article);
+        redo.setEnabled(true);
+      } else {
+        undo.setEnabled(false);
+      }
+    } else if (e.getSource() == redo) {
+      if ((savedFiles-1) > currentArticle) {
+        currentArticle++;
+        String article = originator.getFromMemento(careTaker.get(currentArticle));
+        textArea.setText(article);
+        undo.setEnabled(true);
+      } else {
+        redo.setEnabled(false);
+      }
+    } else {
+      System.out.println("What did you click on!?");
     }
   }
-
 }

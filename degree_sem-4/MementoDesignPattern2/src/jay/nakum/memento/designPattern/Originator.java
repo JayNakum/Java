@@ -4,19 +4,21 @@ public class Originator {
 
     private String article;
 
-    public void setState(String article) {
+    public void set(String article) {
         this.article = article;
     }
 
-    public String getState() {
+    public String get() {
         return this.article;
     }
 
-    public Article saveStateToMemento() {
+    public Article saveToMemento() {
         return new Article(article);
     }
 
-    public void getStateFromMemento(Article article) {
+    public String getFromMemento(Article article) {
         this.article = article.getArticle();
+        
+        return this.article;
     }
 }

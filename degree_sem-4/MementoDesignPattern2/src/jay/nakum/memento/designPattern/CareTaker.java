@@ -1,20 +1,16 @@
 package jay.nakum.memento.designPattern;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class CareTaker {
-    private ArrayList<Map<String, Article>> versionControl = new ArrayList<Map<String, Article>>();
+    private ArrayList<Article> versionControl = new ArrayList<Article>();
     
-    public void add(String commitMsg, Article article) {
-        Map<String, Article> articleMap = new HashMap<String, Article>();
-        articleMap.put(commitMsg, article);
+    public void add(Article article) {
         
-        versionControl.add(articleMap);
+        versionControl.add(article);
     }
 
-    public Map<String, Article> get(int commitCode) {
-        return versionControl.get(commitCode);
+    public Article get(int index) {
+        return versionControl.get(index);
     }
 }
