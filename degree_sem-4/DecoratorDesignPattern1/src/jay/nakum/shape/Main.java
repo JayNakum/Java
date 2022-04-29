@@ -67,6 +67,5 @@ public class Main {
         Shape redRectangle = new BlueShapeDecorator(new Rectangle(), true);
         System.out.println("\nRectangle of blue border");
         redRectangle.draw();
-
     }
 }

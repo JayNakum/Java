@@ -18,5 +18,4 @@ public class Originator {
     public void getStateFromMemento(Process process) {
         this.state = process.getState();
     }
-
 }

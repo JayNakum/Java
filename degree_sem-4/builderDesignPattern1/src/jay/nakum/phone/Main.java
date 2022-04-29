@@ -11,7 +11,7 @@ public class Main {
 				.setBatteryMAH(5000)
 				.getMyPhone();
 		
-		System.out.println(phone.toString());	
+		System.out.println(phone.toString());
 	}
 
 }
